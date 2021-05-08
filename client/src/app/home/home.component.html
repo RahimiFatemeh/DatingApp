@@ -1,0 +1,14 @@
+<br>
+<div  class="container mt-5">
+    <div *ngIf="!registerMode" style='text-align: center;'>
+        <h1 style='text-align: center;'>find your match!</h1>
+        <div>
+            <button class="btn btn-primary mt-5 mr-2" (click)="registerToggle()"> register </button>
+            <button class="btn btn-secondary mt-5"> read more </button>
+        </div>
+    </div>
+
+    <div *ngIf="registerMode">
+        <app-register></app-register>
+    </div>
+</div>

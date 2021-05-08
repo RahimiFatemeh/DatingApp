@@ -1,0 +1,16 @@
+<form  #loginForm="ngForm" autocomplete="off" (ngSubmit)="register()"> 
+        <label for="userName" >username</label>
+        <input 
+            name="username"
+            [(ngModel)] = "model.username"
+            type="text" 
+            placeholder="Username">
+
+        <label for="password" >password</label>
+        <input 
+            name="passwrod"
+            [(ngModel)] = "model.password"
+            type="password" 
+            placeholder="Password">
+        <button class="btn btn-success" type="submit"> sign up</button>
+</form>
