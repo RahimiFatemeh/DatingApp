@@ -13,14 +13,14 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using API.Data;
 using API.Interfaces;
-// using API.Helper ; 
+using API.Helper ; 
 using API.Services ; 
 using API.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using System.Text ; 
 using Microsoft.IdentityModel.Tokens;
-// using AutoMapper ; 
+using AutoMapper ;
 
 
 
@@ -41,7 +41,7 @@ namespace API
             
             services.AddScoped<IUserRepository , UserRepository>() ;   
 
-            // services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
   
             services.AddDbContext<DataContext>(options => 
             {
