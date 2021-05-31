@@ -13,12 +13,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using API.Data;
 using API.Interfaces;
+// using API.Helper ; 
 using API.Services ; 
 using API.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using System.Text ; 
 using Microsoft.IdentityModel.Tokens;
+// using AutoMapper ; 
+
 
 
 namespace API
@@ -35,7 +38,11 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<ITokenService , TokenService>();
+            
+            services.AddScoped<IUserRepository , UserRepository>() ;   
 
+            // services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+  
             services.AddDbContext<DataContext>(options => 
             {
                 options.UseSqlite(_config.GetConnectionString("DefaultConnention"));

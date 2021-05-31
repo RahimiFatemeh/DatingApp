@@ -11,28 +11,28 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-
+    [Authorize]
     public class UsersController : BaseApiController
     {
         // inside this class we have access to our database 
-        private readonly DataContext _context ; 
-        public UsersController(DataContext context)
+        private readonly UserRepository _userRepository;
+        public UsersController(UserRepository userRepository)
         {
-            _context = context ;               
+            _userRepository = userRepository;
+
         }
-         
-        [AllowAnonymous]
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
-            return await _context.Users.ToListAsync(); 
+            return Ok (await _userRepository.GetUsersAsync()) ; 
         }
-        
-        [Authorize]
-        [HttpGet("{id}")]
-        public ActionResult<AppUser> GetUser(int id)
+
+        [HttpGet("{username}")]
+        public async Task<ActionResult<AppUser>> GetUser(string username)
         {
-            return _context.Users.Find(id); 
+            return await _userRepository.GetUserByUsernameAsync(username) ;
+
         }
     }
 }
