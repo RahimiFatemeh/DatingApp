@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
@@ -19,6 +19,13 @@ import { TestErrorsComponent } from './errors/test-errors/test-errors.component'
 import { ErrorInterceptor } from './_Interceptors/error.interceptor';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { MemberCartComponent } from './members/member-cart/member-cart.component';
+import { JwtInterceptor } from './_Interceptors/jwt.interceptor';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { LoadingInterceptor } from './_Interceptors/loading.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { TextInputComponent } from './_forms/text-input/text-input.component';
 
 @NgModule({
   declarations: [
@@ -32,19 +39,28 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     MemberDetailComponent,
     TestErrorsComponent,
     NotFoundComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    MemberCartComponent,
+    MemberEditComponent,
+    TextInputComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule , 
     HttpClientModule, BrowserAnimationsModule,
     FormsModule , 
+    ReactiveFormsModule , 
     BsDropdownModule.forRoot()  ,
     ToastrModule.forRoot({
       positionClass : "toast-bottom-right"
-    })
+    }),
+    NgxGalleryModule ,
+    NgxSpinnerModule
   ],
-  providers: [  {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  providers: [ 
+     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+     {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

@@ -1,16 +1,68 @@
-<form  #loginForm="ngForm" autocomplete="off" (ngSubmit)="register()"> 
+<form [formGroup]='registerForm' autocomplete="off" (ngSubmit)="register()">
+    <!-- <app-text-input [formControl]!='registerForm.controls["username"]' 
+    [label]='"Username"'></app-text-input> -->
+    <div>
+        <div>
         <label for="userName" >username</label>
         <input 
-            name="username"
-            [(ngModel)] = "model.username"
+            formControlName = 'username'
             type="text" 
-            placeholder="Username">
+            placeholder="Username"
+            class="form-control">
+        </div>
+        <div *ngIf="registerForm.get('username')?.touched &&
+            registerForm.get('username')?.invalid" 
+            class="alert alert-danger">please enter a username
+        </div>
+    </div>
 
         <label for="password" >password</label>
         <input 
-            name="passwrod"
-            [(ngModel)] = "model.password"
+            formControlName = 'password'
             type="password" 
-            placeholder="Password">
+            placeholder="Password"
+            class="form-control">
+            <div *ngIf="registerForm.get('password')?.hasError('required') 
+                && registerForm.get('password')?.touched
+                && registerForm.get('password')?.invalid"
+                class="alert alert-danger">please enter a password</div>
+            <!-- <input 
+            formControlName = 'confirmPassword'
+            type="password" 
+            placeholder="Confirm Password"> -->
+        <br>
+        <label for="password" >date of birth</label>
+        <input 
+            formControlName = 'dateOfBirth'
+            type="text" 
+            placeholder="Date of birth"
+            class="form-control">
+        <div *ngIf="registerForm.get('dateOfBirth')?.touched &&
+            registerForm.get('dateOfBirth')?.invalid" 
+            class="alert alert-danger">please enter your birthday
+        </div>
+        <br>
+        <label for="password" >city</label>
+        <input 
+            formControlName = 'city'
+            type="text" 
+            placeholder="City"
+            class="form-control">
+        <div *ngIf="registerForm.get('city')?.touched &&
+            registerForm.get('city')?.invalid" 
+            class="alert alert-danger">please enter your city
+        </div>
+        <br>
+        <label for="password" >country</label>
+        <input 
+            formControlName = 'country'
+            type="text" 
+            placeholder="Country"
+            class="form-control">
+        <div *ngIf="registerForm.get('country')?.touched &&
+            registerForm.get('country')?.invalid" 
+            class="alert alert-danger">please enter your contry
+        </div>
+        <br>
         <button class="btn btn-success" type="submit"> sign up</button>
 </form>

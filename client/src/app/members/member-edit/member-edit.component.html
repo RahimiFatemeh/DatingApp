@@ -1,0 +1,33 @@
+<div class="row container" *ngIf="member">
+    <div class="col-4">
+        <div class="card">
+            <img class="card-img-top" src={{member.photoUrl}} alt="Card image">
+            <div class="card-body">
+                <h4 class="card-title">
+                  {{member.knownAs}}
+                </h4>
+                <p><b>Age:</b>{{member.age}}</p>
+                <p><b>From:</b> {{member.country}},{{member.city}}</p>
+                <p class="card-text">{{member.interests}}</p>
+                
+                <button [disabled]="!editForm.dirty" class="btn btn-primary" form="editForm">Save change</button>                
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+            <h4>Description</h4>
+            <textarea class="form-control mx-2" [(ngModel)]="member.introduction" name="introduction" rows="6"></textarea>
+            <h4>lookingFor</h4>
+            <textarea class="form-control mx-2" [(ngModel)]="member.lookingFor" name="lookingFor" rows="4"></textarea>
+            <h4>interests</h4>
+            <textarea class="form-control mx-2" [(ngModel)]="member.interests" name="interests" rows="3"></textarea>
+            <div class="form-inline">
+                <label for="city">City: </label>
+                <input [(ngModel)]="member.city" type="text" name="city" class="form-control mx-2 mt-2">
+                <label for="city">Country: </label>
+                <input [(ngModel)]="member.country" type="text" name="country" class="form-control mx-2 mt-2">
+            </div>
+        </form>    
+    </div>
+</div>
