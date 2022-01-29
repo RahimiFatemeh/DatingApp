@@ -41,6 +41,8 @@ namespace API
             
             services.AddScoped<IUserRepository , UserRepository>() ;   
 
+            services.AddScoped<LogUserActivity>();
+
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
   
             services.AddDbContext<DataContext>(options => 
@@ -83,8 +85,6 @@ namespace API
             // app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
 
             app.UseAuthentication();
             

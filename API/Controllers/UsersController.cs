@@ -6,6 +6,8 @@ using API.Entities;
 using API.DTOs ; 
 using AutoMapper ; 
 using API.Interfaces ; 
+using API.Helper;
+using API.Extension ; 
 // async
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -28,32 +30,28 @@ namespace API.Controllers
 
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _userRepository.GetMembersAsync() ; 
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            userParams.CurrentUsername = username ;
+
+            if (string.IsNullOrEmpty(userParams.Gender))
+                userParams.Gender = user.Gender == "male" ? "female" : "male" ; 
+
+            var users = await _userRepository.GetMembersAsync(userParams) ; 
+            Response.AddPaginationHeader(users.CurrentPage , users.PageSize , 
+                    users.TotalCount, users.TotalPages);
             return Ok(users) ; 
         }
 
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
+            
             return await _userRepository.GetMemberAsync(username);
         }
-
-        // [HttpPut]
-        // public async Task<ActionResult> Update(MemeberUpdateDtos memeberUpdateDtos)
-        // {
-        //     var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ; 
-        //     var user = await _userRepository.GetUserByUsernameAsync(username);
-
-        //     _mapper.Map<memeberUpdateDtos , user> ; 
-            
-        //     _userRepository.Update(user); 
-
-        //     if( await _userRepository.SaveAllAsync()) return NoContent();
-        //     return BadRequest("Failed to updat user"); 
-        // }
-
         [HttpPut]
         public async Task<ActionResult> UpdateUser(MemberUpdateDtos memberUpdateDtos)
         {
@@ -61,7 +59,7 @@ namespace API.Controllers
             var user = await _userRepository.GetUserByUsernameAsync(username);
 
             _mapper.Map(memberUpdateDtos, user);
-
+            
             _userRepository.Update(user);
 
             if (await _userRepository.SaveAllAsync()) return NoContent();
