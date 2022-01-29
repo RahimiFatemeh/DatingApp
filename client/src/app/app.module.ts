@@ -26,6 +26,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { LoadingInterceptor } from './_Interceptors/loading.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination'
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
       positionClass : "toast-bottom-right"
     }),
     NgxGalleryModule ,
-    NgxSpinnerModule
+    NgxSpinnerModule , 
+    PaginationModule.forRoot()
   ],
   providers: [ 
      {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

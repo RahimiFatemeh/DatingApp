@@ -23,13 +23,13 @@ export class MemberEditComponent implements OnInit {
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {this.user = user})
     this.loadMember()
   }
-
+  
   loadMember()
   {
     if(this.user){
        const username = this.user.username
        this.memberService.getMember(username).subscribe(member => this.member = member)
-       this.editForm.reset(this.member);
+      //  this.editForm.reset(this.member);
     }
   }
 

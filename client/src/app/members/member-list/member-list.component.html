@@ -1,3 +1,53 @@
-<div class="cartClass" *ngFor="let member of members$ | async ">
+<div class="container">
+<form #form="ngForm" (ngSubmit)="loadMembers()" autocomplete="off" class="form-inline">
+       <div class="form-group">
+              <label> Age from: </label>
+              <input 
+               type="number" 
+               name="minAge" 
+               [(ngModel)]="userParams.minAge" 
+               style="width: 70px;"
+               class='form-control mr-2'>
+               <label> till Age: </label>
+       </div>
+       <div class="form-group px-2">
+               <input 
+                type="number" 
+                name="maxAge" 
+                [(ngModel)]="userParams.maxAge" 
+                style="width: 70px;"
+                class='form-control mr-2'>
+       <div class="form-group">
+              <label>gender:  </label>
+              <select name="gender" class="form-control mr-2">
+                     <option *ngFor="let gender of genderList" [value]="gender.value">
+                            {{gender.display}}
+                     </option>
+              </select>
+       </div>
+       <button class="btn btn-primary mr-2" type="submit">Apply Filter</button>
+       <button class="btn btn-secondary" (click)="resetFilter()">Reset Filter</button>
+                     
+       </div>
+</form>
+</div>
+
+<div class="cartClass" *ngFor="let member of members">
        <app-member-cart [member]="member"></app-member-cart>
 </div>
+
+<div class="justify-content-center" *ngIf="pagination">
+       <pagination 
+              [boundaryLinks]="true" 
+              [totalItems]="pagination.totalItems"
+              [itemsPerPage]="pagination.itemPerPage"
+              [(ngModel)]="pagination.currentPage"
+              (pageChanged)="pageChanged($event)"
+              previousText="&lsaquo;"
+              nextText="&rsaquo;" 
+              firstText="&laquo;" 
+              lastText="&raquo;">
+       </pagination>
+</div>
+
+{{pagination.currentPage}}
